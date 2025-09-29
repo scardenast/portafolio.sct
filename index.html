@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Freelancer Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;700&family=Plus+Jakarta+Sans:wght@400;500;700;800&family=Roboto:wght@400;500;700&family=IBM+Plex+Mono:wght@700&display=swap" rel="stylesheet">
+    <style>
+      body {
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        background-color: #000000;
+        color: #F6F5F3;
+      }
+      .font-plus-jakarta-sans { font-family: 'Plus Jakarta Sans', sans-serif; }
+      .font-mulish { font-family: 'Mulish', sans-serif; }
+      .font-roboto { font-family: 'Roboto', sans-serif; }
+      .font-ibm-plex-mono { font-family: 'IBM Plex Mono', monospace; }
+      .text-outline {
+        -webkit-text-stroke: 1px rgba(255, 255, 255, 0.5);
+        color: transparent;
+      }
+      .text-outline-hover {
+        -webkit-text-stroke: 1px #39f8b1;
+        color: transparent;
+      }
+      .animate-scroll {
+        animation: scroll 40s linear infinite;
+      }
+      @keyframes scroll {
+        from { transform: translateX(0); }
+        to { transform: translateX(-50%); }
+      }
+
+      /* Loader Animation */
+      @keyframes loader-spin {
+        0% {
+          transform: rotate(0deg);
+          stroke-dashoffset: 212;
+        }
+        50% {
+          transform: rotate(180deg);
+          stroke-dashoffset: 70;
+        }
+        100% {
+          transform: rotate(360deg);
+          stroke-dashoffset: 212;
+        }
+      }
+      .animate-loader-spin {
+        transform-origin: center;
+        animation: loader-spin 1.5s linear infinite;
+      }
+
+      /* Project Card Effect Styles */
+      .e-card {
+        margin: 1rem auto;
+        background: transparent;
+        box-shadow: 0px 8px 28px -9px rgba(0,0,0,0.45);
+        position: relative;
+        width: 100%;
+        max-width: 300px;
+        height: 400px;
+        border-radius: 16px;
+        overflow: hidden;
+        z-index: 1;
+      }
+
+      .e-card .card-image {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: 0;
+        filter: brightness(0.7);
+        transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), filter 0.4s ease-out;
+      }
+      
+      .e-card:hover .card-image {
+        transform: scale(1.05);
+        filter: brightness(1);
+      }
+
+      .wave {
+        position: absolute;
+        width: 540px;
+        height: 700px;
+        opacity: 0.03;
+        left: 0;
+        top: 0;
+        margin-left: -50%;
+        margin-top: -70%;
+        background: linear-gradient(744deg, #39f8b1, #29e984 80%);
+        z-index: 1;
+        transition: opacity 0.4s ease;
+      }
+
+      .infotop {
+        text-align: center;
+        font-size: 20px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        color: rgb(255, 255, 255);
+        font-weight: 600;
+        z-index: 2;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        align-items: center;
+        background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 65%);
+        padding: 2rem 1rem;
+        transition: background 0.4s ease;
+      }
+      
+      .e-card:hover .infotop {
+        background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 70%);
+      }
+
+      .infotop .title {
+          font-family: 'Plus Jakarta Sans', sans-serif;
+          font-size: 1.5rem;
+          font-weight: 700;
+          text-shadow: 0 2px 15px rgba(0,0,0,0.7);
+      }
+
+      .name {
+        font-size: 14px;
+        font-weight: 100;
+        position: relative;
+        top: 0;
+        margin-top: 0.25rem;
+        text-transform: lowercase;
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        text-shadow: 0 1px 10px rgba(0,0,0,0.7);
+      }
+
+      .wave:nth-child(2),
+      .wave:nth-child(3) {
+        top: 210px;
+      }
+
+      .e-card:hover .wave {
+        border-radius: 40%;
+        animation: wave 3000ms infinite linear;
+        opacity: 0.02;
+      }
+
+      .wave {
+        border-radius: 40%;
+        animation: wave 55s infinite linear;
+      }
+
+      .e-card:hover .wave:nth-child(2) {
+        animation-duration: 4000ms;
+      }
+
+      .wave:nth-child(2) {
+        animation-duration: 50s;
+      }
+
+      .e-card:hover .wave:nth-child(3) {
+        animation-duration: 5000ms;
+      }
+
+      .wave:nth-child(3) {
+        animation-duration: 45s;
+      }
+
+      @keyframes wave {
+        0% {
+          transform: rotate(0deg);
+        }
+
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      /* Project Card Glow Effect */
+      .project-card-wrapper {
+        position: relative;
+      }
+      .project-card-wrapper::before {
+        content: '';
+        position: absolute;
+        inset: -10px;
+        z-index: 0; /* Behind the card */
+        background: conic-gradient(from var(--angle), transparent 25%, #39f8b1, #29e984, transparent 75%);
+        border-radius: 26px; /* card is 16px */
+        opacity: 0;
+        transition: opacity 400ms ease-in-out;
+        filter: blur(20px);
+      }
+      .project-card-wrapper:hover::before {
+        opacity: 0.6;
+        animation: rotateGlow 4s linear infinite;
+      }
+      @property --angle {
+        syntax: '<angle>';
+        inherits: false;
+        initial-value: 0deg;
+      }
+      @keyframes rotateGlow {
+        to {
+          --angle: 360deg;
+        }
+      }
+
+      /* Markdown Content Styles */
+      .markdown-content h1,
+      .markdown-content h2,
+      .markdown-content h3 {
+        font-weight: bold;
+        margin-top: 1.5em;
+        margin-bottom: 0.5em;
+        color: #fff;
+      }
+      .markdown-content h1 { font-size: 2.25rem; }
+      .markdown-content h2 { font-size: 1.875rem; border-bottom: 1px solid #2d2d2d; padding-bottom: 0.3em;}
+      .markdown-content h3 { font-size: 1.5rem; }
+      .markdown-content p {
+        line-height: 1.75;
+        margin-bottom: 1em;
+      }
+      .markdown-content a {
+        color: #39f8b1;
+        text-decoration: underline;
+        transition: color 0.2s;
+      }
+      .markdown-content a:hover {
+        color: #fff;
+      }
+      .markdown-content ul,
+      .markdown-content ol {
+        margin-left: 1.5em;
+        margin-bottom: 1em;
+        line-height: 1.75;
+      }
+      .markdown-content ul { list-style-type: disc; }
+      .markdown-content ol { list-style-type: decimal; }
+      .markdown-content li { margin-bottom: 0.5em; }
+      .markdown-content code {
+        background-color: #0c0c0c;
+        padding: 0.2em 0.4em;
+        margin: 0;
+        font-size: 85%;
+        border-radius: 6px;
+        font-family: 'IBM Plex Mono', monospace;
+      }
+      .markdown-content pre {
+        background-color: #0c0c0c;
+        padding: 1em;
+        border-radius: 8px;
+        overflow-x: auto;
+        border: 1px solid #2d2d2d;
+      }
+      .markdown-content pre code {
+        padding: 0;
+        font-size: inherit;
+        background-color: transparent;
+      }
+      .markdown-content blockquote {
+        border-left: 4px solid #39f8b1;
+        padding-left: 1em;
+        margin-left: 0;
+        font-style: italic;
+        color: #a0aec0;
+      }
+
+    </style>
+<script type="importmap">
+{
+  "imports": {
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.1.1/",
+    "react/": "https://aistudiocdn.com/react@^19.1.1/",
+    "react": "https://aistudiocdn.com/react@^19.1.1",
+    "react-router-dom": "https://aistudiocdn.com/react-router-dom@^7.9.1",
+    "react-router-hash-link": "https://aistudiocdn.com/react-router-hash-link@^2.4.3",
+    "ogl": "https://esm.sh/ogl@1.0.2",
+    "@supabase/supabase-js": "https://aistudiocdn.com/@supabase/supabase-js@^2.45.0",
+    "react-markdown": "https://esm.sh/react-markdown@9.0.1",
+    "rehype-raw": "https://esm.sh/rehype-raw@7.0.0"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+<body class="bg-black">
+    <div id="root"></div>
+<script type="module" src="/index.tsx"></script>
+</body>
+</html>
